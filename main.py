@@ -7,5 +7,5 @@ if __name__ == "__main__":
     pass
     dataset_name = input("请为数据集命名：")
     create(dataset_name)
-    tag(dataset_name)
     resample(dataset_name)
+    tag(dataset_name)

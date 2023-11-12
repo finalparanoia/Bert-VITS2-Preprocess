@@ -18,7 +18,7 @@ def read_breakpoint(file_list_path: str) -> list:
 
 def tag(dataset_name: str):
     current_dataset_dir = f"{dataset_dir}/{dataset_name}"
-    audio_dir = f"{current_dataset_dir}/audios/raw"
+    audio_dir = f"{current_dataset_dir}/audios/wavs"
     filelist = ls(f"{audio_dir}/*.wav")
     file_list_path = f"{current_dataset_dir}/filelists/{dataset_name}.list"
 
@@ -33,10 +33,9 @@ def tag(dataset_name: str):
         if file[-3:] != 'wav':
             continue
 
-        character_name = file.rstrip(".wav").split("_")[0]
-        save_path = f"{audio_dir[:-3]}wavs/{character_name}/{file}"
+        # todo 支持单数据集多角色
 
-        if save_path in complete_list:
+        if file in complete_list:
             continue
 
         rec_result = inference_pipeline(file)
@@ -44,7 +43,7 @@ def tag(dataset_name: str):
         if 'text' not in rec_result:
             continue
 
-        line = save_path + "|" + character_name + "|ZH|" + rec_result['text'] + "\n"
+        line = file + "|" + dataset_name + "|ZH|" + rec_result['text'] + "\n"
 
         with open(file_list_path, 'a', encoding='utf-8') as f:
             f.write(line)
