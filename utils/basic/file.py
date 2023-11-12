@@ -1,7 +1,11 @@
 from glob import glob
 from shutil import move
 from os.path import exists
-from os import mkdir
+from os import mkdir, remove
+
+
+def rm(path: str):
+    remove(path)
 
 
 def ls(path: str) -> list[str]:
