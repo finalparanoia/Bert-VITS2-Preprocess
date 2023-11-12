@@ -4,7 +4,7 @@ from multiprocessing import Pool, cpu_count
 
 import soundfile
 from tqdm import tqdm
-from config.config import dataset_dir
+from model_conf.config import dataset_dir
 
 
 def process(item: set[str, str, str, str]):

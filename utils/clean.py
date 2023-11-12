@@ -1,4 +1,4 @@
-from config.config import dataset_dir
+from model_conf.config import dataset_dir
 from utils.basic.file import ls, rm
 
 

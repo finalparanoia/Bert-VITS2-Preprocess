@@ -1,6 +1,6 @@
 from modelscope.pipelines import pipeline
 from modelscope.utils.constant import Tasks
-from config.config import dataset_dir, modelscope_model
+from model_conf.config import dataset_dir, modelscope_model
 from utils.basic.file import ls, exist
 
 
