@@ -2,6 +2,7 @@ from utils.basic.file import ls, mv, exist, mkdir
 from config.config import raw_dir, dataset_dir, tmp_dir
 from pydub import AudioSegment
 from pydub.silence import detect_nonsilent
+from joblib import Parallel, delayed
 
 
 def mk_dataset_dir(current_dataset_path: str):
@@ -46,9 +47,13 @@ def create(dataset_name: str):
     mk_dataset_dir(current_dataset_path)
 
     # todo 并行运算加速
+    tasks = []
     for raw_file in raw_files:
-        cut_long_silences(dataset_name, raw_file, i)
+        tasks.append(delayed(cut_long_silences)(dataset_name, raw_file, i))
+        # cut_long_silences(dataset_name, raw_file, i)
         i += 1
+    multi_work = Parallel(n_jobs=16, backend='multiprocessing')
+    multi_work(tasks)
 
     for tmp in ls(f"{tmp_dir}/*.wav"):
         mv(tmp, f"{current_dataset_path}/audios/Raw")
